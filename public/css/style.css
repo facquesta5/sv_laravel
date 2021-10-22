@@ -1,0 +1,40 @@
+
+nav{
+    border-bottom: 1px solid #dee2e6!important;
+}
+.accordion-item {
+    margin-bottom: 4px ;
+    border: 1px solid rgba(.125,.125,.125,.125) !important;
+}
+.form-control {
+    padding: 0.150rem .75rem;
+}
+.btn-group-lg>.btn, .btn-lg {
+    padding: .2rem 1rem;
+}
+.feedback-nome, .feedback-email, .feedback-usuario, .feedback-senha {
+    display: none;
+}
+.hidde{
+    display: none; 
+}
+.alert-success {
+    display: none;
+    color: #0f5132;
+    background-color: #b3edca;
+    border-color: #3c8564;
+}
+.alert{
+    padding: 0.5rem 1rem;
+}
+.msg-show{
+    display: block;
+}
+.close{
+    border-radius: 4px;
+    border:2px solid #cbdae1;
+}
+.far{
+    font-size: 20px;
+    cursor: pointer;
+}
