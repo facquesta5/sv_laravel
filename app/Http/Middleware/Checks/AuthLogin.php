@@ -5,7 +5,7 @@ namespace App\Http\Middleware\Checks;
 use Closure;
 use Illuminate\Http\Request;
 
-class AuthLoginCliente
+class AuthLogin
 {
     /**
      * Handle an incoming request.
@@ -16,6 +16,10 @@ class AuthLoginCliente
      */
     public function handle(Request $request, Closure $next)
     {
-        return $next($request);
+        if(\Session::get('id')){ // Se tiver variáveis de sessão
+            return $next($request); // $next é o objeto da classe Closure
+        }
+
+        return redirect(route('login'));
     }
 }

@@ -18,11 +18,25 @@ nav{
 .hidde{
     display: none; 
 }
-.alert-success {
+.alert-danger, .alert-success {
     display: none;
+}
+.alert-success {
     color: #0f5132;
     background-color: #b3edca;
     border-color: #3c8564;
+}
+.alert-danger{
+    background-color:#fbc7cc;
+    border-color: #842029;
+}
+.msg-danger{
+    color: #842029;
+    margin: 0 0 0 5px;
+    font-size: 0.8em;
+}
+.form-label{
+    margin-bottom: 0.1em    ;
 }
 .alert{
     padding: 0.5rem 1rem;
@@ -32,7 +46,8 @@ nav{
 }
 .close{
     border-radius: 4px;
-    border:2px solid #cbdae1;
+    border:none !important;
+    background: none !important;
 }
 .far{
     font-size: 20px;

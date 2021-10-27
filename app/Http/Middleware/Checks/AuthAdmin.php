@@ -21,7 +21,7 @@ class AuthAdmin
         }else{
             return redirect(route('login'));
         }
-        
-        return redirect(route('home.admin'));
+
+        return redirect(route('denied'));
     }
 }

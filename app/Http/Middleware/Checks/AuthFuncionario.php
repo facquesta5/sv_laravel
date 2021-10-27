@@ -5,7 +5,7 @@ namespace App\Http\Middleware\Checks;
 use Closure;
 use Illuminate\Http\Request;
 
-class AuthCliente
+class AuthFuncionario
 {
     /**
      * Handle an incoming request.
@@ -20,6 +20,6 @@ class AuthCliente
             return $next($request); // $next é o objeto da classe Closure
         }
         
-        return redirect(route('home.cliente'));
+        return redirect(route('denied'));
     }
 }

@@ -33,8 +33,6 @@ class AuthController extends Controller
             
             \Session::put($session_params);
             \Session::save();
-           
-            session()->regenerate();
 
             if ($session_params['nivel_id'] == 1) { // Se for admin
                 return response()->json([

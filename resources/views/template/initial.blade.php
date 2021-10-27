@@ -13,46 +13,51 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light"> 
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="navbar-toggler-icon"></span>
-                    </button> <a class="navbar-brand" href="#">Sistemas Vitais - Módulo</a>
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="navbar-nav">
-                            
-                            
-                            @if(Route::is('login'))
-                            <li class="nav-item active">
-                                <li class="nav-link">Entre com seu login de usuário</li>    
-                            </li>
-                            <!-- 
-                            <li class="nav-item active">
-                                <a class="nav-link" href="{{route('home')}}">Home <span class="sr-only"></span></a>
-                            </li>
-                            <li class="nav-item active">
-                                <a class="nav-link" href="{{route('login')}}">Login <span class="sr-only"></span></a>
-                            </li> -->
-                            @else
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Dropdown
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a class="dropdown-item" href="#">Action</a></li>
-                                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="{{route('logout')}}"><i class="fas fa-sign-out-alt"></i> Logout 
-                                        <span class="sr-only"></span>
-                                        
-                                    </a>
-                                </li> 
-                            @endif
-                            
-                        </ul>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Sistemas Vitais | Modulo - </a>
+            <button 
+                class="navbar-toggler" 
+                type="button" 
+                data-toggle="collapse" 
+                data-target="#navbarSupportedContent" 
+                aria-controls="navbarSupportedContent" 
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                @if (Session::get('nivel_id')) {{-- Se o usuário for admin --}} 
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Administrar
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ Route('hospitais') }}">Hospitais</a>
+                        <a class="dropdown-item" href="#">Sistemas</a>
+                        <a class="dropdown-item" href="#">Equipamentos</a>
+                        <a class="dropdown-item" href="#">Ocorrencias</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{Route('usuarios')}}">Usuários</a>
                     </div>
-                </nav>
+                </li>          
+                @endif 
+                
+                @if (Session::get('nivel_id'))
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ route('logout') }}">
+                        <i class="fas fa-sign-out-alt"></i> Logout </a>
+                        <span class="sr-only"></span>
+                        
+                </li>
+                @endif
+                </ul>
+            </div>
+            </nav>    
+                        
+                        
+
+
         </div>
     </div>
 
