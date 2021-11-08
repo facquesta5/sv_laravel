@@ -83,10 +83,8 @@
       $("#senha-msg-alert").removeClass(msg_classes).html("");
 
     }
-    if($("#senha").val() == '' &&  ($("#usuario").val() == '')){
-
-    }
-    else if($("#senha").val() != '' &&  ($("#usuario").val() != '')){
+  
+    if($("#senha").val() != '' &&  ($("#usuario").val() != '')){
           $.ajax({
               url: 'auth',
               type: 'POST',

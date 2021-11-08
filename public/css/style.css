@@ -1,16 +1,22 @@
 
+body{
+    font-size:0.9rem ;
+}
+td, th { text-align: left !important;
+}
 nav{
     border-bottom: 1px solid #dee2e6!important;
-}
-.accordion-item {
-    margin-bottom: 4px ;
-    border: 1px solid rgba(.125,.125,.125,.125) !important;
+    font-size:1.0rem !important;
 }
 .form-control {
     padding: 0.150rem .75rem;
 }
 .btn-group-lg>.btn, .btn-lg {
     padding: .2rem 1rem;
+}
+i.close{
+    cursor:pointer !important;
+    font-size: 20px;
 }
 .feedback-nome, .feedback-email, .feedback-usuario, .feedback-senha {
     display: none;
@@ -50,6 +56,6 @@ nav{
     background: none !important;
 }
 .far{
-    font-size: 20px;
+    font-size: 1.3em;
     cursor: pointer;
 }

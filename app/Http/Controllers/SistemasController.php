@@ -4,21 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class HospitaisController extends Controller
+class SistemasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function hospitais()
-    {
+    public function sistemas(){
+        
+        $sistemas = \DB::table('sistemas')
+            ->join('hospitais', 'hospitais.id', '=', 'sistemas.id_hospital')
+            ->select(
+                'sistemas.nome', 
+                'hospitais.id', 
+                'sistemas.id_hospital',
+                'hospitais.nome as hospital',
+                'sistemas.id as id_sistema')
+        ->get();
+
         $hospitais = \DB::table('hospitais')->get();
 
-        return view('hospitais')
-                    ->with('hospitais', $hospitais);
-        
-        return view('hospitais');
+        return view('sistemas',['sistemas' => $sistemas , 'hospitais' => $hospitais]);
+
     }
 
     public function incluir (Request $req) {
@@ -27,13 +30,14 @@ class HospitaisController extends Controller
 
         try {
 
-            \DB::table('hospitais')->insert([
+            \DB::table('sistemas')->insert([
+                "id_hospital" => $req->id_hospital,
                 "nome" => $req->nome
             ]);
 
             \DB::commit();
 
-            return 'Hospital cadastrado com sucesso!';
+            return 'Sistema cadastrado com sucesso!';
         } catch (\Exception $e) {
             \DB::rollback();
             return $e;
@@ -45,13 +49,14 @@ class HospitaisController extends Controller
 
         try {
 
-            \DB::table('hospitais')->where('id', $req->id)->update([
+            \DB::table('sistemas')->where('id', $req->id)->update([
+                "id_hospital" => $req->id_hospital,   
                 "nome" => $req->nome
             ]);
 
             \DB::commit();
 
-            return 'Hospital cadastrado com sucesso!';
+            return 'Sistema alterado com sucesso!';
 
         } catch (\Exception $e) {
             \DB::rollback();
@@ -59,13 +64,14 @@ class HospitaisController extends Controller
         }
     }
 
+
     public function excluir(Request $req) {
         
         \DB::beginTransaction();
 
         try {
 
-            \DB::table('hospitais')->where('id', $req->id)->delete();
+            \DB::table('sistemas')->where('id', $req->id)->delete();
 
             \DB::commit();
 
@@ -75,7 +81,5 @@ class HospitaisController extends Controller
         }
 
     }
-
-
 
 }

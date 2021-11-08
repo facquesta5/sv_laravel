@@ -38,6 +38,21 @@ Route::middleware('check.login')->group(function() {
         Route::put('/usuarios/alterar', 'App\Http\Controllers\UsuariosController@alterar')->name('usuarios.alterar');
 
         Route::get('/hospitais', 'App\Http\Controllers\HospitaisController@hospitais')->name('hospitais');
+        Route::post('/hospitais/incluir', 'App\Http\Controllers\HospitaisController@incluir')->name('cadastro');
+        Route::delete('/hospitais/excluir', 'App\Http\Controllers\HospitaisController@excluir')->name('hospitais.apagar');
+        Route::put('/hospitais/alterar', 'App\Http\Controllers\HospitaisController@alterar')->name('hospitais.alterar');
+        
+        Route::get('/sistemas', 'App\Http\Controllers\SistemasController@sistemas')->name('sistemas');
+        Route::post('/sistemas/incluir', 'App\Http\Controllers\SistemasController@incluir')->name('cadastro');
+        Route::delete('/sistemas/excluir', 'App\Http\Controllers\SistemasController@excluir')->name('sistemas.apagar');
+        Route::put('/sistemas/alterar', 'App\Http\Controllers\sistemasController@alterar')->name('sistemas.alterar');
+   
+        Route::get('/equipamentos', 'App\Http\Controllers\EquipamentosController@equipamentos')->name('equipamentos');
+        Route::post('/equipamentos/incluir', 'App\Http\Controllers\EquipamentosController@incluir')->name('cadastro');
+        Route::delete('/equipamentos/excluir', 'App\Http\Controllers\EquipamentosController@excluir')->name('equipamentos.apagar');
+        Route::put('/equipamentos/alterar', 'App\Http\Controllers\EquipamentosController@alterar')->name('equipamentos.alterar');
+
+        Route::get('/ocorrencias', 'App\Http\Controllers\OcorrenciasController@ocorrencias')->name('ocorrencias');
     });
 
     // Rotas Funcionario
