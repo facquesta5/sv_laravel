@@ -5,7 +5,7 @@
     <div class="panel-heading p-3">
         <div class="row">
             <div class="col-md-12">
-            <h2 class="float-start">Sistemas</h2>
+            <h4 class="float-start">Sistemas</h4>
                 <button class="btn btn-success font-weight-bold float-end" 
                 data-toggle="modal" data-target="#modal-sistema-adicionar">
                 <i class="fas fa-plus"></i> Novo Sistema</button>
@@ -51,9 +51,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Adicionar Sistema</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <i class="fas fa-times close"  data-dismiss="modal" aria-label="Close"></i>
         </div>
         <div class="modal-body">
             <div class="row">
@@ -89,9 +87,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Alterar Sistema</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <i class="fas fa-times close"  data-dismiss="modal" aria-label="Close"></i>
         </div>
         <div class="modal-body">
             <div class="row">

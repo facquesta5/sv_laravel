@@ -26,14 +26,38 @@ class OcorrenciasController extends Controller
         ->get();
 
         $sistemas = \DB::table('sistemas')->get();
-
         $hospitais = \DB::table('hospitais')->get();
+        $equipamentos = \DB::table('equipamentos')->get();
 
         return view('ocorrencias', [ 
+            'equipamentos' => $equipamentos,
+            'ocorrencias' => $ocorrencias,
             'sistemas' => $sistemas, 
-            'hospitais' => $hospitais
+            'hospitais' => $hospitais,
         ]);
 
         return view('ocorrencias');
+    }
+
+    public function incluir (Request $req) {
+
+        \DB::beginTransaction();
+
+        try {
+
+            \DB::table('ocorrencias')->insert([
+                "id_equipamento" => $req->id_equipamento,
+                "id_sistema" => $req->id_sistema,
+                "id_hospital" => $req->id_hospital,
+                "descricao" => $req->descricao
+            ]);
+
+            \DB::commit();
+
+            return 'Ocorrencia cadastrado com sucesso!';
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return $e;
+        }
     }
 }

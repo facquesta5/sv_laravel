@@ -53,6 +53,7 @@ Route::middleware('check.login')->group(function() {
         Route::put('/equipamentos/alterar', 'App\Http\Controllers\EquipamentosController@alterar')->name('equipamentos.alterar');
 
         Route::get('/ocorrencias', 'App\Http\Controllers\OcorrenciasController@ocorrencias')->name('ocorrencias');
+        Route::post('/ocorrencias/incluir', 'App\Http\Controllers\OcorrenciasController@incluir')->name('cadastro');
     });
 
     // Rotas Funcionario
