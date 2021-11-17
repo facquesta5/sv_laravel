@@ -218,27 +218,6 @@ $('document').ready(function(){
     
     });
 
-/*
-    <select id="" readonly> </select>
-
-    $.ajax({
-                type: 'POST',
-                url: "/ocorrencias/selecionarEquipamento",
-                data: { 
-                    id_hospital: $("#id_hospital").val(),
-                    id_sistema: $("#id_sistema").val() 
-                },
-                success: function (json) {
-                    var options = $('#empresa');
-                    options.find('option').remove();
-                    $.each(json, function (key, value) {
-                                 $('<option').val(value.IdEmpresa).text(value.Nome).appendTo(options);
-                        //options += '<option value="' + key + '">' + value + '</option>';
-                    });   
-                }
-            });
-*/
-
     $('#btnAlterarSistema').on('click', function(){/* START ALTERAR SISTEMA */
 
         var idSistema = $(this).attr('data-id');

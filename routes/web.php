@@ -21,7 +21,6 @@ Route::post('/auth', 'App\Http\Controllers\AuthController@auth'); // AutorizaÃ§Ã
 
 Route::get('/usuarios', 'App\Http\Controllers\UsuariosController@usuarios')->name('usuarios');
 
-
 Route::middleware('check.login')->group(function() {
 
     Route::get('/logout', 'App\Http\Controllers\AuthController@logout')->name('logout'); // localhost:8000/logout
@@ -54,6 +53,10 @@ Route::middleware('check.login')->group(function() {
 
         Route::get('/ocorrencias', 'App\Http\Controllers\OcorrenciasController@ocorrencias')->name('ocorrencias');
         Route::post('/ocorrencias/incluir', 'App\Http\Controllers\OcorrenciasController@incluir')->name('cadastro');
+        Route::post('/ocorrencias/listEquipamentos', 'App\Http\Controllers\OcorrenciasController@listEquipamentos')->name('listarEquipamentos');
+        Route::delete('/ocorrencias/excluir', 'App\Http\Controllers\OcorrenciasController@excluir')->name('ocorrencias.apagar');
+        Route::put('/ocorrencias/alterar', 'App\Http\Controllers\OcorrenciasController@alterar')->name('ocorrencias.alterar');
+
     });
 
     // Rotas Funcionario

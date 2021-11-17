@@ -47,41 +47,53 @@
 <script type="text/javascript">
 
   $('document').ready(function (){
+   
+   $(document).keypress(function(e) {
+      if(e.which == 13) $('#loginUsuario').click();
+    });
 
     $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 
-  
+  let classes = ['alert-danger', 'msg-show'] ;
+  let msg_classes = ['msg-danger', 'msg-show'] ;
+
+  $("#usuario").blur(function(){
+    if ($("#usuario").val() != ''){
+      $("#usuario").removeClass(classes);
+      $("#usuario-msg-alert").removeClass(msg_classes).html(""); 
+    }
+  });
+
+  $("#senha").blur(function(){
+    if ($("#senha").val() != ''){
+      $("#senha").removeClass(classes);
+      $("#senha-msg-alert").removeClass(msg_classes).html(""); 
+    }
+  });
+
   $('#loginUsuario').click(function(){
 
     if ($("#usuario").val() == ''){
-      let classes = ['alert-danger', 'msg-show'] ;
       $("#usuario").addClass(classes);
       let campo_usuario = 'Usuário é um campo obrigatório';
       $("#usuario-msg-alert").addClass('msg-danger').html(campo_usuario);
     }
     else if ($("#usuario").val() != ''){
-      let classes = ['alert-danger', 'msg-show'] ;
       $("#usuario").removeClass(classes);
-      let msg_classes = ['msg-danger', 'msg-show'] ;
       $("#usuario-msg-alert").removeClass(msg_classes).html(""); 
     }
-
     if ($("#senha").val() == ''){
-      let classes = ['alert-danger', 'msg-show'] ;
       $("#senha").addClass(classes);
       let campo_senha = 'Senha é um campo obrigatório';
       $("#senha-msg-alert").addClass('msg-danger').html(campo_senha);
     }
     else if($("#senha").val() != ''){
-      let classes = ['alert-danger', 'msg-show'] ;
       $("#senha").removeClass(classes);
-      let msg_classes = ['msg-danger', 'msg-show'] ;
       $("#senha-msg-alert").removeClass(msg_classes).html("");
-
     }
   
     if($("#senha").val() != '' &&  ($("#usuario").val() != '')){
@@ -90,7 +102,8 @@
               type: 'POST',
               data: {
                   usuario: $('#usuario').val(),
-                  senha: $('#senha').val()
+                  senha: $('#senha').val(),
+                  _token: "{{ csrf_token() }}"
               },
               success: function (result) {
                   if (result == 0) {
@@ -98,7 +111,6 @@
 
                     $('#alert_box').addClass('msg-show');
                     $('#msg_alert').html('Usuário ou senha não encontrados');
-
 
                   } else {
                     console.log(result);

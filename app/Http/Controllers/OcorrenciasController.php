@@ -60,4 +60,60 @@ class OcorrenciasController extends Controller
             return $e;
         }
     }
+
+    public function listEquipamentos(Request $req){
+        
+        $equipamentos = \DB::table('equipamentos')
+        ->select(
+            'equipamentos.id',
+            'equipamentos.nome',
+        )
+        ->where('equipamentos.id_sistema', $req->id_sistema)
+        ->where('equipamentos.id_hospital', $req->id_hospital)
+        ->orderBy('id', 'DESC')
+        ->get();
+
+        return $equipamentos;
+
+    }
+
+    public function alterar(Request $req) {
+        \DB::beginTransaction();
+
+        try {
+
+            \DB::table('ocorrencias')
+            ->where('id', $req->id)->update([
+                "id_equipamento" => $req->id_equipamento,
+                "id_sistema" => $req->id_sistema,
+                "id_hospital" => $req->id_hospital,
+                "descricao" => $req->descricao
+            ]);
+
+            \DB::commit();
+
+            return 'Ocorrencia alterada com sucesso!';
+
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return $e;
+        }
+    }
+
+    public function excluir(Request $req) {
+        
+        \DB::beginTransaction();
+
+        try {
+
+            \DB::table('ocorrencias')->where('id', $req->id)->delete();
+
+            \DB::commit();
+
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return csrf_token();
+        }
+
+    }
 }
