@@ -137,7 +137,9 @@ $('document').ready(function() {
 
     var myTable = setDatatable($('#myTable'));
 
-    $('#btnNovoUsuario').on('click', function(){  /* START INCLUIR USUARIO */
+    /* 
+    * * START INCLUIR USUARIO */
+    $('#btnNovoUsuario').on('click', function(){  
 
         let btn = $(this);
         let btn_text = btn.html();

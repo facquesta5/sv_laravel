@@ -22,6 +22,7 @@
                             <th>Sistema</th>
                             <th>Hospital</th>
                             <th>Ocorrencia</th>
+                            <th class="text-center">Status</th>
                             <th class="text-center">Alterar</th>
                             <th class="text-center">Excluir</th>
                         </tr>
@@ -33,12 +34,26 @@
                         <td>{{ $ocorrencia->sistema }}</td>
                         <td>{{ $ocorrencia->hospital }}</td>    
                         <td>{{ $ocorrencia->descricao }}</td>
+                        
+                        <th class="text-center">
+                        @if( $ocorrencia->id_status == 3 )
+                            <img width="16px" src="../images/vermelho.png" ></img>
+                        @endif
+                        @if( $ocorrencia->id_status == 2 )
+                            <img width="16px" src="../images/amarelo.png" ></img>
+                        @endif
+                        @if( $ocorrencia->id_status == 1 )
+                            <img width="16px" src="../images/verde.png" ></img>
+                        @endif
+                        </th>
+                        
                             <td class="text-center">
                             <i class="far fa-edit btn-alterar-ocorrencia" data-target="#modal-ocorrencia-alterar"
                                 data-toggle="modal"
                                 data-equipamento="{{ $ocorrencia->id_equipamento }}" 
                                 data-hospital="{{ $ocorrencia->id_hospital }}" 
-                                data-sistema="{{ $ocorrencia->id_sistema }}" 
+                                data-sistema="{{ $ocorrencia->id_sistema }}"
+                                data-status="{{ $ocorrencia->id_status }}" 
                                 id="{{ $ocorrencia->id }}">
                             </i>
                             </td>
@@ -71,7 +86,7 @@
                 <div class="col-md-12">
                     <label for="" class="form-label">Hospital</label>
                     <select name="id_hospital" id="id_hospital" onChange="getEquipamentos()" class="form-select">
-                        <option value=''>--- Selecione um Hospital ---</option>
+                        <option value=''>--- Selecione o Hospital ---</option>
                         @foreach ($hospitais as $hospital)
                             <option value="{{$hospital->id }}">{{$hospital->nome }}</option>
                         @endforeach
@@ -80,7 +95,7 @@
                 <div class="col-md-12">
                     <label for="" class="form-label">Sistema</label>
                     <select name="id_sistema" id="id_sistema" onChange="getEquipamentos()" class="form-select">
-                        <option value="">--- Selecione um Sistema ---</option>
+                        <option value="">--- Selecione o Sistema ---</option>
                         @foreach ($sistemas as $sistema)
                             <option value="{{$sistema->id }}">{{$sistema->nome }}</option>
                         @endforeach
@@ -89,10 +104,18 @@
                 <div class="col-md-12">
                     <label for="" class="form-label" >Equipamento</label>
                     <select name="id_equipamento" id="id_equipamento" disabled="disabled" class="form-select">
-                        <option value="">--- Selecione um Equipamentos ---</option>
+                        <option value="">--- Selecione o Equipamentos ---</option>
                     </select>
                 </div>                
-                
+                <div class="col-md-12">
+                    <label for="" class="form-label">Status de urgência</label>
+                    <select name="id_status" id="id_status" class="form-select">
+                        <option value="">--- Selecione o nível de urgência ---</option>
+                        <option value="1">verde</option>
+                        <option value="2">amarelo</option>
+                        <option value="3">vermelho</option>
+                    </select>
+                </div>
             </div>
         </div>
         <div class="modal-footer">
@@ -119,7 +142,7 @@
                 </div>
                 <div class="col-md-12">
                     <label for="" class="form-label">Hospital</label>
-                    <select name="id_hospital" id="id_hospital-alt" onChange="getEquipamentos()" class="form-select">
+                    <select name="id_hospital-alt" id="id_hospital-alt" onChange="getEquipamentos()" class="form-select">
                         <option value=''>--- Selecione um Hospital ---</option>
                         @foreach ($hospitais as $hospital)
                             <option value="{{$hospital->id }}">{{$hospital->nome }}</option>
@@ -128,7 +151,7 @@
                 </div>
                 <div class="col-md-12">
                     <label for="" class="form-label">Sistema</label>
-                    <select name="id_sistema" id="id_sistema-alt" onChange="getEquipamentos()" class="form-select">
+                    <select name="id_sistema-alt" id="id_sistema-alt" onChange="getEquipamentos()" class="form-select">
                         <option value="">--- Selecione um Sistema ---</option>
                         @foreach ($sistemas as $sistema)
                             <option value="{{$sistema->id }}">{{$sistema->nome }}</option>
@@ -137,9 +160,17 @@
                 </div>
                 <div class="col-md-12">
                     <label for="" class="form-label" >Equipamento</label>
-                    <select name="id_equipamento" id="id_equipamento-alt" class="form-select">
+                    <select name="id_equipamento-alt" id="id_equipamento-alt" class="form-select">
                     </select>
-                </div> 
+                </div>
+                <div class="col-md-12">
+                    <label for="" class="form-label" >Status de urgência</label>
+                    <select name="id_status-alt" id="id_status-alt" class="form-select">
+                        <option value="1" >verde</option>
+                        <option value="2" >amarelo</option>
+                        <option value="3" >vermelho</option>
+                    </select>
+                </div>  
             </div>
         </div>
         <div class="modal-footer">
@@ -159,7 +190,10 @@ $('document').ready(function(){
 
     var myTable = setDatatable($('#myTable'));
 
-    $('#btnNovoOcorrencia').on('click', function(){/* START INCLUIR OCORRÊNCIA */
+    /**
+    * * START INCLUIR OCORRÊNCIA
+    */ 
+    $('#btnNovoOcorrencia').on('click', function(){
 
         let btn = $(this);
         let btn_text = btn.html();
@@ -172,11 +206,13 @@ $('document').ready(function(){
                 id_equipamento: $('#id_equipamento option:selected').attr('value'),
                 id_sistema: $('#id_sistema option:selected').attr('value'),
                 id_hospital: $('#id_hospital option:selected').attr('value'),
+                id_status: $('#id_status option:selected').attr('value'),
                 descricao: $('#descricao').val(),
                 _token: "{{ csrf_token() }}"
             },
             success: function(result) {
                 response = result;
+                console.log(result);
                 Swal.fire(
                     'Adicionado!',
                     response,
@@ -194,10 +230,15 @@ $('document').ready(function(){
         });
         btn_enable(btn, btn_text);
 
-    });/* END INCLUIR OCORRENCIA */
+    });
+    /**
+    * * END INCLUIR OCORRENCIA 
+    */
 
-    
-    $("#id_hospital").on("change", function(){ getEquipamentos(); });/* START INCLUIR getEquipamentos */
+    /**
+    * * START INCLUIR getEquipamentos
+    */
+    $("#id_hospital").on("change", function(){ getEquipamentos(); });
     $("#id_sistema").on("change", function(){ getEquipamentos(); });    
     
     function getEquipamentos(){
@@ -231,10 +272,15 @@ $('document').ready(function(){
                 }
             });
         }
-    }/* END INCLUIR getEquipamentos */
-           
-   
-    $("#id_hospital-alt").on("change", function(){ alterEquipamentos(); });/* START ALTERAR OCORRENCIA */
+    }
+    /**
+    * * END INCLUIR getEquipamentos
+    */
+    
+    /**
+    * * START alterEquipamentos OCORRENCIA 
+    */
+    $("#id_hospital-alt").on("change", function(){ alterEquipamentos(); });
     $("#id_sistema-alt").on("change", function(){ alterEquipamentos(); }); 
     function alterEquipamentos(){
         
@@ -267,9 +313,14 @@ $('document').ready(function(){
                 }
             });
         }
-    }/* END ALTERAR alterEquipamentos */
+    }
+    /**
+    * * END alterEquipamentos OCORRENCIAS 
+    */
 
-
+    /**
+    * * START ALTERAR OCORRENCIA 
+    */
     $('#myTable tbody').on('click', '.btn-alterar-ocorrencia', function(){ 
         //ao clicar no botão de btn-alterar-ocorrencia
         var row = myTable.row($(this).closest('tr')).data();
@@ -282,11 +333,14 @@ $('document').ready(function(){
         // a variavel idHospital recebe o valor setado no atributo data-hospital
         var idSistema = $(this).attr('data-sistema');
         // a variavel idSistema recebe o valor setado no atributo data-sistema
+        var idStatus = $(this).attr('data-status');
+        // a variavel idStatus recebe o valor setado no atributo data-status
         console.log(idHospital);
 
         $('#descricao-alt').val(row[3]);
         $('#id_hospital-alt').val(idHospital);
         $('#id_sistema-alt').val(idSistema);
+        $('#id_status-alt').val(idStatus);
         $('#btnAlterarOcorrencia').attr('data-id', idOcorrencia);
 
             $.ajax({
@@ -317,55 +371,60 @@ $('document').ready(function(){
             });
     });
 
-    $('#btnAlterarOcorrencia').on('click', function(){/* START ALTERAR OCORRENCIA */
-
+    $('#btnAlterarOcorrencia').on('click', function(){ 
         var idOcorrencia = $(this).attr('data-id');
         let btn = $(this);
         let btn_text = btn.html();
-
-        btn_disable(btn);
-
-        $.ajax({
-            url: 'ocorrencias/alterar',
-            type: 'PUT',
-            data: {
-                id: idOcorrencia,
-                id_equipamento: $('#id_equipamento-alt option:selected').attr('value'),
-                id_sistema: $('#id_sistema-alt option:selected').attr('value'),
-                id_hospital: $('#id_hospital-alt option:selected').attr('value'),
-                descricao: $('#descricao-alt').val(),
-                _token: "{{ csrf_token() }}"
-            },
-            success: function(result){
-                response = result;
-                Swal.fire({
-                    title: 'Sucesso!',
-                    text: 'Os dados da ocorrencia foram alterados',
-                    icon: 'success',
-                    showCancelButton: false,
-                    confirmButtonColor: '#3085d6',
-                    confirmButtonText: 'Ok',
-                    allowOutsideClick: false,
-                }).then((result) => {
-                    if (result.isConfirmed) {
+        btn_disable(btn); 
+        Swal.fire({
+            title: 'Você tem certeza?',
+            text: "A ocorrencia será alterada",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, alterar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed){
+                $.ajax({
+                    url: 'ocorrencias/alterar',
+                    type: 'PUT',
+                    data: {
+                        id: idOcorrencia,
+                        id_equipamento: $('#id_equipamento-alt option:selected').attr('value'),
+                        id_sistema: $('#id_sistema-alt option:selected').attr('value'),
+                        id_hospital: $('#id_hospital-alt option:selected').attr('value'),
+                        id_status: $('#id_status-alt option:selected').attr('value'),
+                        descricao: $('#descricao-alt').val(),
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(result){
+                        Swal.fire(
+                            'Alterado!',
+                            'A ocorrência foi alterada',
+                            'success'
+                        );
+                        $('meta[name="csrf-token"]').attr('content', result.token);
                         window.history.go(0);
+                    },
+                    error: function(result){
+                        console.log(result);
+                        $('meta[name="csrf-token"]').attr('content', result.token);
+                        btn_enable(btn, btn_text);
                     }
-                });
-                $('meta[name="csrf-token"]').attr('content', result.token);
-                    btn_enable(btn, btn_text);
-            },
-            error: function(result){
-                console.log(result);
-                $('meta[name="csrf-token"]').attr('content', result.token);
-                btn_enable(btn, btn_text);
+                });   
             }
-
         });
+    });
+    /**
+    * * END ALTERAR OCORRENCIA 
+    */
 
-    }); /* END ALTERAR OCORRENCIA */
-
-
-    $('#myTable tbody').on('click', '.btn-excluir-ocorrencia', function() { /* START EXCLUIR OCORRENCIA */
+    /**
+    * * START EXCLUIR OCORRENCIA 
+    */
+    $('#myTable tbody').on('click', '.btn-excluir-ocorrencia', function() { 
 
         var idOcorrencia = $(this).attr('id');
 
@@ -404,7 +463,10 @@ $('document').ready(function(){
             }
         });
 
-    });/* END EXCLUIR OCORRÊNCIA */
+    });
+    /**
+    * * END EXCLUIR OCORRÊNCIA 
+    */
 
 });
 

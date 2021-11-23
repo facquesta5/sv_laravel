@@ -14,6 +14,7 @@ class OcorrenciasController extends Controller
             ->join('equipamentos', 'equipamentos.id', '=', 'ocorrencias.id_equipamento')
             ->select(
                 'ocorrencias.id',
+                'ocorrencias.id_status',
                 'ocorrencias.descricao',
                 'equipamentos.id as id_equipamento',
                 'equipamentos.nome as equipamento',
@@ -49,6 +50,7 @@ class OcorrenciasController extends Controller
                 "id_equipamento" => $req->id_equipamento,
                 "id_sistema" => $req->id_sistema,
                 "id_hospital" => $req->id_hospital,
+                "id_status" => $req->id_status,
                 "descricao" => $req->descricao
             ]);
 
@@ -87,6 +89,7 @@ class OcorrenciasController extends Controller
                 "id_equipamento" => $req->id_equipamento,
                 "id_sistema" => $req->id_sistema,
                 "id_hospital" => $req->id_hospital,
+                "id_status" => $req->id_status,
                 "descricao" => $req->descricao
             ]);
 

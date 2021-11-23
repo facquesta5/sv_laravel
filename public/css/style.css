@@ -59,3 +59,9 @@ i.close{
     font-size: 1.3em;
     cursor: pointer;
 }
+img, svg {
+    padding-bottom: 4px;
+}
+table.dataTable tbody th, table.dataTable tbody td {
+    padding: 6px 10px;
+}
