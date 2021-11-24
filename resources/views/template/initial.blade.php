@@ -33,6 +33,9 @@
                     Administrar
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                        <a class="dropdown-item" href="{{Route('home.admin')}}">Home Admin</a>
+                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ Route('hospitais') }}">Hospitais</a>
                         <a class="dropdown-item" href="{{ Route('sistemas') }}">Sistemas</a>
                         <a class="dropdown-item" href="{{ Route('equipamentos') }}">Equipamentos</a>
