@@ -2,48 +2,46 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UsuariosController extends Controller
 {
-    public function usuarios(){
-        
+    public function usuarios()
+    {
+
         $usuarios = \DB::table('usuarios')->get();
 
         return view('usuarios')
-                    ->with('usuarios', $usuarios);
-        
-        return view('usuarios');
+            ->with('usuarios', $usuarios);
 
+        return view('usuarios');
     }
-    public function dados_de_usuario(){
+    public function dados_de_usuario()
+    {
         return view('usuario.dados');
     }
 
-    public function incluir (Request $req) {
-
-        \DB::beginTransaction();
+    public function incluir(Request $req)
+    {
 
         try {
-
-            \DB::table('usuarios')->insert([
+            User::create([
                 "nivel_id" => 1, // 1 = Admin, 2 = Cliente // Sempre será cliente
-                "nome" => $req->nome,
-                "usuario" => $req->usuario,
+                "name" => $req->nome,
+                "nickname" => $req->usuario,
                 "email" => $req->email,
-                "access_token" => sha1($req->senha),
+                "password" => bcrypt($req->senha),
             ]);
+            return response()->json(null, 200);
 
-            \DB::commit();
-
-            return 'Cliente cadastrado com sucesso!';
-        } catch (\Exception $e) {
-            \DB::rollback();
-            return $e;
+        } catch (\Throwable $th) {
+            return response()->json(null, 400);
         }
     }
 
-    public function alterar(Request $req) {
+    public function alterar(Request $req)
+    {
         \DB::beginTransaction();
 
         try {
@@ -58,15 +56,15 @@ class UsuariosController extends Controller
             \DB::commit();
 
             return 'Usuário cadastrado com sucesso!';
-
         } catch (\Exception $e) {
             \DB::rollback();
             return $e;
         }
     }
 
-    public function excluir(Request $req) {
-        
+    public function excluir(Request $req)
+    {
+
         \DB::beginTransaction();
 
         try {
@@ -74,11 +72,9 @@ class UsuariosController extends Controller
             \DB::table('usuarios')->where('id', $req->id)->delete();
 
             \DB::commit();
-
         } catch (\Exception $e) {
             \DB::rollback();
             return csrf_token();
         }
-
     }
 }
