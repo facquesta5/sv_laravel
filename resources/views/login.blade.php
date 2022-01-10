@@ -25,7 +25,6 @@
                 <p class="" id="senha-msg-alert"></p>
             </div>
 
-
             <div class="invalid-feedback">Usuário e/ou senha inválidos</div>
 
             <button id="" class="btn btn-primary mt-4">Entrar</button>
@@ -37,7 +36,7 @@
 
 @section('js');
     <script type="text/javascript">
-        $('document').ready(function() {
+       /* $('document').ready(function() {
 
             $(document).keypress(function(e) {
                 if (e.which == 13) $('#loginUsuario').click();
@@ -115,9 +114,7 @@
                     });
                 }
             });
-
-
-
         });
+        */
     </script>
 @endsection
