@@ -4,6 +4,7 @@ namespace App\Http\Middleware\Checks;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthAdmin
 {
@@ -16,12 +17,11 @@ class AuthAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if(\Session::get('nivel_id') == 1){ // Se for admin
+        if(Auth::user()->nivel_id == 1){ // Se for admin
             return $next($request); // $next é o objeto da classe Closure
-        }else{
-            return redirect(route('login'));
         }
 
-        return redirect(route('denied'));
+        return redirect(route('login'));
+
     }
 }

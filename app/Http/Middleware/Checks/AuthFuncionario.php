@@ -4,6 +4,7 @@ namespace App\Http\Middleware\Checks;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthFuncionario
 {
@@ -16,10 +17,11 @@ class AuthFuncionario
      */
     public function handle(Request $request, Closure $next)
     {
-        if(\Session::get('nivel_id') == 2){ // Se for cliente
+
+         if(Auth::user()->nivel_id == 2){ // Se for cliente
             return $next($request); // $next é o objeto da classe Closure
-        }
-        
-        return redirect(route('denied'));
+         }
+
+         return redirect(route('denied'));
     }
 }
