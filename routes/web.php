@@ -27,7 +27,7 @@ Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/auth', [AuthController::class, 'auth'])->name('auth'); // Autorização de login de usuário
 
 
-Route::middleware('check.login')->group(function () {
+Route::middleware('auth')->group(function () {
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout'); // localhost:8000/logout
 
@@ -67,6 +67,6 @@ Route::middleware('check.login')->group(function () {
 
     // Rotas Funcionario
     Route::middleware('check.funcionario')->group(function () {
-        Route::get('/home/funcionario', 'App\Http\Controllers\HomeController@homeFuncionario')->name('home.funcionario');
+        Route::get('/home/funcionario', [HomeController::class, 'homeFuncionario'])->name('home.funcionario');
     });
 });
