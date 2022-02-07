@@ -27,7 +27,7 @@ class AuthController extends Controller
             ]
         ]);
 
-        if (!Auth::attempt($credenciais)) { // com ajax* Se a collection $credenciais estiver vazia, retorna ...
+        if (!Auth::attempt($credenciais)) {//Com ajax* Se a collection $credenciais estiver vazia, retorna ...
             return redirect()->back(); //força usuario a voltar para o lugar de onde veio
             //response()->json(false, 401);
         }
